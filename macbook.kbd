@@ -1,0 +1,94 @@
+(defcfg
+  process-unmapped-keys yes
+  danger-enable-cmd yes
+  concurrent-tap-hold yes
+)
+
+;; Définition des touches physiques (Macbook Pro AZERTY)
+
+(defsrc
+  esc
+  IntlBackslash   1     2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab             q     w    e    r    t    y    u    i    o    p    [    ]    ret
+  caps            a     s    d    f    g    h    j    k    l    ;    '    \
+  lsft            grv   z    x    c    v    b    n    m    ,    .    /         rsft
+  fn              lctl  lalt lmet           spc                 rmet ralt cmp  rctl
+)
+
+(defchordsv2
+  (s d) ret 500 first-release ()
+)
+
+;; Définition des touches spéciales :
+(defalias
+  ;; Rename useful keys
+  bcktck (macro \ spc)
+  or_log A-S-l
+  amprsd 1
+  e_aigu 2
+  d_qute 3
+  s_qute 4
+  e_grve 7
+  exclam 8
+  cedill 9
+  a_grve 0
+
+  o_prts 5
+  c_prts -
+  o_brc  A-5
+  c_brc  A--
+  o_brkt A-S-5
+  c_brkt A-S--
+  hyphen =
+  undscr S-=
+
+  plus   S-/
+  equal  /
+  multip S-]
+
+  < (unicode <)
+  > (unicode >)
+  
+  ;; Open apps
+  dscrd (cmd bash -c "open '/Applications/Discord.app'")
+  figma (cmd bash -c "open '/Applications/Figma.app'")
+  btwdn (cmd bash -c "open '/Applications/Bitwarden.app'")
+  pstmn (cmd bash -c "open '/Applications/Postman.app'")
+  robo3 (cmd bash -c "open '/Applications/Robo 3T.app'")
+  slack (cmd bash -c "open '/Applications/Slack.app'")
+  tlgrm (cmd bash -c "open '/Applications/Telegram.app'")
+  vscod (cmd bash -c "open '/Applications/Visual Studio Code.app'")
+  warp  (cmd bash -c "open '/Applications/Warp.app'")
+  linea (cmd bash -c "open '/Applications/Linear.app'")
+  mattr (cmd bash -c "open '/Applications/Mattermost.app'")
+  ntion (cmd bash -c "open '/Applications/Notion.app'")
+  zen   (cmd bash -c "open '/Applications/Zen Browser.app'")
+  chat  (cmd bash -c "open '/Applications/ChatGPT.app'")
+  pg-ui (cmd bash -c "open '/Applications/TablePlus.app'")
+  email (cmd bash -c "open '/Applications/Spark Desktop.app'")
+
+  ;; Layers
+  arw-l (layer-toggle arrow_layer)
+  ;; cmm-l (tap-hold-except-keys 200 200 m (layer-toggle arrow_layer) (spc))
+)
+
+
+(deflayer base
+  _
+  _     @zen   _      _     _      @warp @warp _    _      _    _      @vscod @vscod _
+  _     _      _      _     _      _     _     _    _      _    _      _      _      _
+  bspc  _      _      _     _      _     _     _    _      _    _      _      _
+  _     @arw-l _      _     _      _     _     _    _      _    _      _             @slack
+  _     _      _      _                  _                      @arw-l ret    _      @slack ;; <-- fn not working
+)
+
+
+;; Layer active quand espace est hold
+(deflayer arrow_layer
+  _
+  _     1     _     @bcktck @<      @>      _       _       _       _       lsgt    _       _       _
+  _     S-1   S-2   S-3     @o_brkt @c_brkt _       _       up      _       _       _       _       _
+  _     S-4   S-5   S-6     @o_prts @c_prts @hyphen left    down    rght    _       _       _
+  _     _     S-7   S-8     S-9     @o_brc  @c_brc  @undscr _       _       _       _               _
+  _     _     _     _                       S-0                             _       _       _       _
+)

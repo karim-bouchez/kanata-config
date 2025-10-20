@@ -1,6 +1,7 @@
 (defcfg
   process-unmapped-keys yes
   danger-enable-cmd yes
+  concurrent-tap-hold yes
 )
 
 ;; Définition des touches physiques (GK61 AZERTY)
@@ -10,15 +11,17 @@
   tab   q     w    e    r    t    y    u    i    o    p    [    ]    ret
   caps  a     s    d    f    g    h    j    k    l    ;    '    \
   lsft  lsgt  z    x    c    v    b    n    m    ,    .    /         rsft
-  lctl  lmet  lalt                spc                 ralt rmet cmp  rctl
+  lctl  lmet  lalt                spc                 ralt rmet rctl fn
 )
 
+(defchordsv2
+  (s d) ret 500 first-release ()
+)
 
 ;; Définition des touches spéciales :
 (defalias
   ;; Rename useful keys
-  bcktck \
-  ;; bcktck (macro \ spc)
+  bcktck (macro \ spc)
   or_log A-S-l
   amprsd 1
   e_aigu 2
@@ -46,46 +49,36 @@
   > (unicode >)
 
   ;; Open apps
-  zen   (cmd bash -c "open -a /Applications/Zen.app")
-  code  (cmd bash -c "open -a '/Applications/Visual Studio Code.app'")
-  warp  (cmd bash -c "open -a /Applications/Warp.app")
-  ntion (cmd bash -c "open -a /Applications/Notion.app")
-  tlgrm (cmd bash -c "open -a /Applications/Telegram.app")
-  chat  (cmd bash -c "open -a /Applications/ChatGPT.app")
-  pg-ui (cmd bash -c "open -a /Applications/TablePlus.app")
-  email (cmd bash -c "open -a /Applications/Spark\\ Desktop.app")
+  slack (cmd bash -c "open '/Applications/Slack.app'")
+  vscod (cmd bash -c "open '/Applications/Visual Studio Code.app'")
+  warp  (cmd bash -c "open '/Applications/Warp.app'")
+  zen   (cmd bash -c "open '/Applications/Zen.app'")
+  ;; zen   (cmd bash -c "open '/Applications/Zen Browser.app'")
 
   ;; Layers
-  spc-l (tap-hold 200 200 spc (layer-toggle space_layer))
-  ret-l (tap-hold 200 200 ret (layer-toggle return_layer))
+  arw-l (layer-toggle arrow_layer)
+  ;; cmm-l (tap-hold-except-keys 200 200 m (layer-toggle arrow_layer) (spc))
 )
 
 
+
+
+
 (deflayer base
-  _     @zen @code @warp XX   XX   XX   XX   XX   XX   @pg-ui @tlgrm @email caps
-  _     _    _     _     _    _    _    _    _    _    _      _      _      _
-  bspc  _    _     _     _    _    _    _    _    _    _      _      _
-  _     XX   _     _     _    _    _    _    _    _    _      _             _
-  _     lalt lmet                  @spc-l              @ret-l _      _      _
+  _     @zen   _      _     _      @warp @warp _    _      _    _      @vscod @vscod _
+  _     _      _      _     _      _     _     _    _      _    _      _      _      _
+  bspc  _      _      _     _      _     _     _    _      _    _      _      _
+  _     _      _      _     _      _     _     _    _      _    _      _             @slack
+  _     lalt   lmet                      _                      @arw-l _      _      @slack ;; <-- fn not working
 )
 
 
 ;; Layer active quand espace est hold
-(deflayer space_layer
-  _       _       _       _       @<      @>       _       _       _       _       _       _       _       _
-  _       S-1     S-2    S-3      @o_brkt @c_brkt @plus   @d_qute up      @s_qute @bcktck  _       _       _
-  _       S-4     S-5    S-6      @o_prts @c_prts @hyphen left    down    rght    _       _       _
-  _       S-0     S-7    S-8      S-9     @o_brc  @c_brc  @undscr _       _       _       _               _
-  _       _       _                               _                               _       _       _       _
+(deflayer arrow_layer
+  _  1    _    @bcktck @<      @>      _      _        _    _    lsgt _       _       _
+  _  S-1  S-2  S-3     @o_brkt @c_brkt _      _        _    up   _    _       _       _
+  _  S-4  S-5  S-6     @o_prts @c_prts _      @hyphen  left down rght _       _
+  _  _    S-7  S-8     S-9     @o_brc  @c_brc @undscr  _    _    _    _               _
+  _  _    _                            S-0             _              _       _       _
 )
-
-;; Layer active quand return est hold
-(deflayer return_layer
-  _     _    _    _       _       _    _    _    _       _       _    _    _    _
-  _     lsgt _    @e_aigu _       _    _    _    @or_log @amprsd _    _    _    _
-  _     _    _    _       _       _    _    _    _       _       _    _    _
-  _     _    _    _       @cedill _    _    _    @exclam _       _    _         _
-  _     _    _                         _                         _    _    _    _
-)
-
 
