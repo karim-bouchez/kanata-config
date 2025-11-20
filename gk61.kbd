@@ -7,16 +7,16 @@
 ;; Définition des touches physiques (GK61 AZERTY)
 
 (defsrc
-  esc   1     2    3    4    5    6    7    8    9    0    -    =    bspc
+  grv   1     2    3    4    5    6    7    8    9    0    -    =    bspc
   tab   q     w    e    r    t    y    u    i    o    p    [    ]    ret
   caps  a     s    d    f    g    h    j    k    l    ;    '    \
   lsft  lsgt  z    x    c    v    b    n    m    ,    .    /         rsft
-  lctl  lmet  lalt                spc                 ralt menu rctl fn
+  lctl  lmet  lalt                spc                 ralt rmet rctl fn
 )
 
 (defchordsv2
-  (s d) ret 500 first-release ()
-  (lsft lsgt) @> 500 first-release ()
+  (a s d) ret 500 first-release ()
+  (lsft lsgt) @> 200 first-release ()
 )
 
 ;; Définition des touches spéciales :
@@ -41,14 +41,14 @@
   c_brkt A-S--
   hyphen =
   undscr S-=
-  hshtag S-lsgt
+  hshtag (unicode "#")
 
   plus   S-/
   equal  /
   multip S-]
 
-  < (unicode <)
-  > (unicode >)
+  < (unicode "<")
+  > (unicode ">")
 
   ;; Open apps
   slack (cmd bash -c "open '/Applications/Slack.app'")
@@ -56,6 +56,18 @@
   warp  (cmd bash -c "open '/Applications/Warp.app'")
   zen   (cmd bash -c "open '/Applications/Zen.app'")
   ;; zen   (cmd bash -c "open '/Applications/Zen Browser.app'")
+  dscrd (cmd bash -c "open '/Applications/Discord.app'")
+  figma (cmd bash -c "open '/Applications/Figma.app'")
+  btwdn (cmd bash -c "open '/Applications/Bitwarden.app'")
+  pstmn (cmd bash -c "open '/Applications/Postman.app'")
+  robo3 (cmd bash -c "open '/Applications/Robo 3T.app'")
+  tlgrm (cmd bash -c "open '/Applications/Telegram.app'")
+  linea (cmd bash -c "open '/Applications/Linear.app'")
+  mattr (cmd bash -c "open '/Applications/Mattermost.app'")
+  ntion (cmd bash -c "open '/Applications/Notion.app'")
+  chat  (cmd bash -c "open '/Applications/ChatGPT.app'")
+  pg-ui (cmd bash -c "open '/Applications/TablePlus.app'")
+  email (cmd bash -c "open '/Applications/Spark Desktop.app'")
 
   ;; Layers
   arw-l (layer-toggle arrow_layer)
@@ -63,23 +75,31 @@
 )
 
 
-
-
-
 (deflayer base
-  _     @zen   _      _     _      @warp @warp _    _      _    _      @vscod @vscod _
+  _     _      _      _     _      _     _     _    _      _    _      _      _      _
   _     _      _      _     _      _     _     _    _      _    _      _      _      _
   bspc  _      _      _     _      _     _     _    _      _    _      _      _
-  _     @<     _      _     _      _     _     _    _      _    _      _             @slack
-  _     lalt   lmet                      _                      @arw-l ret    _      @slack ;; <-- fn not working
+  _     @<     _      _     _      _     _     _    _      _    _      _             _
+  _     lalt   lmet                      _                      @arw-l a      _      _ ;; <-- fn not working
 )
 
 
 ;; Layer active quand espace est hold
 (deflayer arrow_layer
-  _  1    _    @bcktck @bcktck _       _       _        _    _    lsgt _       _       _
+  _  1    _    @hshtag @bcktck _       _       _        _    _    lsgt _       _       _
   _  S-1  S-2  S-3     @o_brkt @c_brkt _       _        _    up   _    _       _       _
-  _  S-4  S-5  S-6     @o_prts @c_prts @hshtag @hyphen  left down rght _       _
+  _  S-4  S-5  S-6     @o_prts @c_prts _       @hyphen  left down rght _       _
   _  _    S-7  S-8     S-9     @o_brc  @c_brc  @undscr  _    _    _    _               _
   _  _    _                            S-0                        _    _       _       _
 )
+
+
+
+(deflayer app_layer
+  XX    XX    XX      XX      XX      XX      XX   XX     XX  XX      XX      XX  XX  XX
+  XX    XX    @zen    @email  @robo3  @tlgrm  XX   XX     XX  XX      @pg-ui  XX  XX  XX 
+  XX    XX    @slack  XX      @figma  XX      XX   XX     XX  @linea  @mattr  XX  XX 
+  XX    XX    @warp   XX      XX      @vscod  XX   @ntion XX  XX      XX      XX      XX 
+  XX    XX    XX                      XX                              XX      XX  XX  XX
+)
+
